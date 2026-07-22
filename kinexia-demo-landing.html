@@ -570,7 +570,7 @@ h2.titulo{font-family:'Fraunces',Georgia,'Times New Roman',serif;font-weight:560
   <svg viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 3.5 17.3L2 22l4.8-1.4A10 10 0 1 0 12 2Zm5.6 14.2c-.2.7-1.3 1.3-1.9 1.4-.5 0-1.1.2-3.6-.8a12.4 12.4 0 0 1-5.1-4.5c-.4-.6-1.2-1.8-1.2-3.1s.7-2 1-2.2c.2-.3.5-.4.7-.4h.5c.2 0 .4 0 .6.5l.9 2.1c0 .2.1.4 0 .6l-.4.6-.4.5c-.1.2-.3.4-.1.7a9 9 0 0 0 1.7 2.1 8.6 8.6 0 0 0 2.4 1.5c.3.1.5.1.7-.1l.7-.9c.2-.3.4-.3.7-.2l2.2 1c.3.2.5.3.6.4 0 .1 0 .6-.2 1.2Z"/></svg>
 </a>
 
-<div class="chat-panel" id="chat" aria-hidden="true" aria-label="Chat de Kinexia">
+<div class="chat-panel" id="chat" role="dialog" aria-label="Chat de Kinexia" aria-hidden="true" inert>
   <div class="chat-head">
     <div class="chat-ava">K</div>
     <div class="chat-id"><b>Kinexia</b><span>Asistente · demo</span></div>
@@ -866,13 +866,20 @@ const chatChips= document.getElementById('chat-chips');
 let saludado = false;
 
 function abrirChat(){
-  chatEl.classList.add('abierto'); chatEl.setAttribute('aria-hidden','false');
+  chatEl.classList.add('abierto'); chatEl.setAttribute('aria-hidden','false'); chatEl.removeAttribute('inert');
   if(!saludado){ saludado = true; pintar(menuInicial('¡Hola! 👋 Soy la asistente virtual de Kinexia. Ojo: es una <b>demo</b>, respondo con guiones — pero te muestro cómo se sentiría. ¿En qué te ayudo?')); }
   document.getElementById('chat-text').focus();
 }
-function cerrarChat(){ chatEl.classList.remove('abierto'); chatEl.setAttribute('aria-hidden','true'); }
+function cerrarChat(){
+  chatEl.classList.remove('abierto'); chatEl.setAttribute('aria-hidden','true'); chatEl.setAttribute('inert','');
+  document.getElementById('wsp-btn').focus(); // devuelve el foco a la burbuja
+}
 function addMsg(html, quien){
-  const d = document.createElement('div'); d.className = 'msg '+quien; d.innerHTML = html;
+  const d = document.createElement('div'); d.className = 'msg '+quien;
+  // El texto del usuario NUNCA como HTML (evita self-XSS con <img onerror> etc.).
+  // El del bot es texto propio y controlado (usa <b>); cuando se conecte IA real,
+  // sanitizar su salida antes de pasarla acá.
+  if(quien === 'yo') d.textContent = html; else d.innerHTML = html;
   chatBody.appendChild(d); chatBody.scrollTop = chatBody.scrollHeight;
 }
 function setChips(chips){
@@ -901,7 +908,16 @@ function enviar(textoVisible, query){
   addMsg(textoVisible, 'yo'); setChips([]); mostrarTyping();
   setTimeout(() => {
     quitarTyping();
-    Promise.resolve(responderAgente(query || textoVisible)).then(pintar);
+    Promise.resolve()
+      .then(() => responderAgente(query || textoVisible)) // captura throw síncrono
+      .then(r => {
+        if(!r || typeof r.text !== 'string') throw new Error('respuesta inválida');
+        pintar(r);
+      })
+      .catch(() => pintar({ // sin filtrar detalle técnico al cliente
+        text: 'Uy, no pude responder ahora 😅. Intenta de nuevo o te paso con una persona:',
+        chips: menuChips()
+      }));
   }, 550);
 }
 
@@ -910,6 +926,7 @@ document.getElementById('wsp-btn').addEventListener('click', e => {
   chatEl.classList.contains('abierto') ? cerrarChat() : abrirChat();
 });
 document.getElementById('chat-x').addEventListener('click', cerrarChat);
+chatEl.addEventListener('keydown', e => { if(e.key === 'Escape') cerrarChat(); });
 document.getElementById('chat-form').addEventListener('submit', e => {
   e.preventDefault();
   const inp = document.getElementById('chat-text');
