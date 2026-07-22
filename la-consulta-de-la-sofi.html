@@ -473,20 +473,19 @@
   });
 
   /* ---------- radioteca ---------- */
-  const YT='https://www.youtube.com/@LaConsultadelaSofi';
   const episodios=[
-    {f:"SERIE · 15 CAP.", nom:"Entender la Depresión", dur:"La serie que partió todo — 157 mil personas la han visto", pos:8},
-    {f:"CAP. 161", nom:"Padres cuarentaneando", dur:"35 min · crianza en tiempos raros", pos:78},
-    {f:"CAP. 158", nom:"Madres tóxicas", dur:"53 min · para escuchar con mate en mano", pos:40},
-    {f:"CAP. 159", nom:"Infantilización", dur:"33 min · tratarnos como grandes", pos:55},
-    {f:"CAP. 156", nom:"No humildad", dur:"40 min · el ego con correa corta", pos:25},
-    {f:"EN VIVO", nom:"Los lives de Facebook", dur:"Conversaciones en directo con la comunidad", pos:92}
+    {f:"157 MIL VISTAS", nom:"Entender la Depresión", dur:"27 min · el capítulo que partió todo", pos:8, url:"https://youtu.be/E1MGPNDD15M"},
+    {f:"CAP. 161", nom:"Padres cuarentaneando", dur:"36 min · crianza en tiempos raros", pos:78, url:"https://youtu.be/SaUM6tvYYNI"},
+    {f:"CAP. 158", nom:"Madres tóxicas", dur:"54 min · para escuchar con mate en mano", pos:40, url:"https://youtu.be/AQY_nFuyQG8"},
+    {f:"CAP. 159", nom:"Infantilización", dur:"33 min · tratarnos como grandes", pos:55, url:"https://youtu.be/gI4UVEHGCHk"},
+    {f:"CAP. 156", nom:"No humildad", dur:"40 min · el ego con correa corta", pos:25, url:"https://youtu.be/k1snvhCpGTU"},
+    {f:"EN VIVO", nom:"Los lives de Facebook", dur:"Conversaciones en directo con la comunidad", pos:92, url:"https://www.facebook.com/LaConsultaDeLaSofi"}
   ];
   const le=document.getElementById('lista-episodios');
   episodios.forEach(e=>{
     const a=document.createElement('a');
     a.className='card dial-card';
-    a.href=e.f==='EN VIVO'?'https://www.facebook.com/LaConsultaDeLaSofi':YT;
+    a.href=e.url;
     a.target='_blank'; a.rel='noopener';
     a.innerHTML=`<span class="freq">${e.f}</span><h3>${e.nom}</h3><span class="dur">${e.dur}</span>
       <div class="dial-line"><i style="left:${e.pos}%"></i></div>`;
