@@ -42,6 +42,11 @@
   nav a.link{color:var(--ink-soft); text-decoration:none; font-size:.92rem; padding:.3rem .15rem; border-bottom:2px solid transparent}
   nav a.link:hover{color:var(--coral)}
   nav a.link[aria-current="page"]{color:var(--coral); border-bottom-color:var(--coral)}
+  @media (max-width:640px){
+    nav .wrap{justify-content:center; gap:.15rem 1.1rem; padding:.5rem 1rem}
+    nav .brand{flex-basis:100%; margin:0 0 .15rem; text-align:center}
+    nav a.link{padding:.45rem .25rem}
+  }
   .view{display:none}
   .view.active{display:block; animation:fadein .35s ease}
   @keyframes fadein{from{opacity:0; transform:translateY(8px)}to{opacity:1}}
