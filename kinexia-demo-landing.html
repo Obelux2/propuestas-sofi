@@ -216,6 +216,35 @@ h2.titulo{font-family:'Fraunces',Georgia,'Times New Roman',serif;font-weight:560
 .wsp svg{width:30px;height:30px;fill:#fff}
 .demo-badge{position:fixed;left:16px;bottom:16px;background:var(--tinta);color:var(--papel);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;border-radius:99px;padding:7px 14px;z-index:60;opacity:.85}
 
+/* ---- chat agente (demo) ---- */
+.chat-panel{position:fixed;right:20px;bottom:88px;width:344px;max-width:calc(100vw - 32px);height:72vh;max-height:540px;background:var(--papel);border-radius:16px;box-shadow:0 18px 50px rgba(0,0,0,.28);display:flex;flex-direction:column;overflow:hidden;z-index:61;opacity:0;transform:translateY(12px) scale(.98);pointer-events:none;transition:opacity .2s,transform .2s}
+.chat-panel.abierto{opacity:1;transform:none;pointer-events:auto}
+.chat-head{background:var(--bosque);color:var(--papel);display:flex;align-items:center;gap:10px;padding:12px 14px}
+.chat-ava{width:38px;height:38px;border-radius:50%;background:linear-gradient(140deg,#CBBBEF,#8FA77C);display:flex;align-items:center;justify-content:center;font-family:'Fraunces',Georgia,'Times New Roman',serif;font-weight:700;color:var(--bosque);flex-shrink:0}
+.chat-id{flex:1;line-height:1.25}
+.chat-id b{font-size:15px}
+.chat-id span{font-size:11px;color:#B9C6AC;display:flex;align-items:center;gap:5px}
+.chat-id span::before{content:"";width:7px;height:7px;border-radius:50%;background:#4ADE80}
+.chat-x{background:none;border:none;color:#B9C6AC;font-size:16px;cursor:pointer;padding:4px;line-height:1}
+.chat-body{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:8px}
+.msg{max-width:84%;padding:8px 12px;border-radius:14px;font-size:14px;line-height:1.42}
+.msg.bot{background:var(--crema);border:1px solid var(--linea);align-self:flex-start;border-bottom-left-radius:4px}
+.msg.yo{background:var(--salvia-suave);color:#2C4026;align-self:flex-end;border-bottom-right-radius:4px}
+.msg b{font-weight:700}
+.typing{display:flex;gap:4px;align-self:flex-start;background:var(--crema);border:1px solid var(--linea);padding:11px 13px;border-radius:14px;border-bottom-left-radius:4px}
+.typing i{width:7px;height:7px;border-radius:50%;background:#9AA290;animation:tdot 1s infinite}
+.typing i:nth-child(2){animation-delay:.15s}
+.typing i:nth-child(3){animation-delay:.3s}
+@keyframes tdot{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+.chat-chips{display:flex;flex-wrap:wrap;gap:6px;padding:0 12px 8px}
+.chat-chips button{font-family:'Karla',system-ui,sans-serif;font-size:12.5px;font-weight:600;background:var(--crema);border:1.5px solid var(--lila-suave);color:var(--lila);border-radius:99px;padding:7px 12px;cursor:pointer;transition:all .12s}
+.chat-chips button:hover{border-color:var(--lila);background:var(--lila-suave)}
+.chat-input{display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--linea);background:var(--crema)}
+.chat-input input{flex:1;border:1.5px solid var(--linea);border-radius:99px;padding:9px 14px;font-family:'Karla',system-ui,sans-serif;font-size:14px;background:var(--papel);color:var(--tinta)}
+.chat-input input:focus{outline:none;border-color:var(--salvia)}
+.chat-input button{border:none;background:var(--bosque);color:#fff;width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:15px;flex-shrink:0}
+@media(max-width:480px){.chat-panel{right:12px;left:12px;width:auto;bottom:84px}}
+
 /* ---- ficha producto / curso ---- */
 .ficha{display:grid;grid-template-columns:1fr 1fr;gap:40px;padding:44px 0 20px;align-items:start}
 .ficha-img{aspect-ratio:1;border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:130px;position:relative}
@@ -537,9 +566,23 @@ h2.titulo{font-family:'Fraunces',Georgia,'Times New Roman',serif;font-weight:560
   </div>
 </footer>
 
-<a class="wsp" href="#" aria-label="Escríbenos por WhatsApp">
+<a class="wsp" href="#" id="wsp-btn" aria-label="Abrir chat de Kinexia">
   <svg viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 3.5 17.3L2 22l4.8-1.4A10 10 0 1 0 12 2Zm5.6 14.2c-.2.7-1.3 1.3-1.9 1.4-.5 0-1.1.2-3.6-.8a12.4 12.4 0 0 1-5.1-4.5c-.4-.6-1.2-1.8-1.2-3.1s.7-2 1-2.2c.2-.3.5-.4.7-.4h.5c.2 0 .4 0 .6.5l.9 2.1c0 .2.1.4 0 .6l-.4.6-.4.5c-.1.2-.3.4-.1.7a9 9 0 0 0 1.7 2.1 8.6 8.6 0 0 0 2.4 1.5c.3.1.5.1.7-.1l.7-.9c.2-.3.4-.3.7-.2l2.2 1c.3.2.5.3.6.4 0 .1 0 .6-.2 1.2Z"/></svg>
 </a>
+
+<div class="chat-panel" id="chat" aria-hidden="true" aria-label="Chat de Kinexia">
+  <div class="chat-head">
+    <div class="chat-ava">K</div>
+    <div class="chat-id"><b>Kinexia</b><span>Asistente · demo</span></div>
+    <button class="chat-x" id="chat-x" aria-label="Cerrar chat">✕</button>
+  </div>
+  <div class="chat-body" id="chat-body"></div>
+  <div class="chat-chips" id="chat-chips"></div>
+  <form class="chat-input" id="chat-form">
+    <input id="chat-text" type="text" autocomplete="off" placeholder="Escribe tu mensaje…" aria-label="Escribe tu mensaje">
+    <button type="submit" aria-label="Enviar">➤</button>
+  </form>
+</div>
 
 <span class="demo-badge">Demo · Propuesta de rediseño</span>
 
@@ -746,6 +789,132 @@ document.addEventListener('click', e=>{
   if(!t) return;
   e.preventDefault();
   ir(t.dataset.ir, t.dataset.filtro);
+});
+
+/* ============================================================
+   AGENTE KINEXIA — demo guionado
+   COSTURA para IA real: para conectar RelevanceAI, la API de
+   Claude o WhatsApp Business, reemplazar SOLO el cuerpo de
+   responderAgente() por un fetch al backend. Debe devolver
+   {text, chips}. La UI (abrir/cerrar, burbujas, typing) no cambia.
+   Ej. futuro:
+     async function responderAgente(texto){
+       const r = await fetch(API_URL, {method:'POST', body: JSON.stringify({texto})});
+       const d = await r.json();
+       return {text: d.respuesta, chips: d.chips || menuChips()};
+     }
+   ============================================================ */
+const WSP_REAL = 'https://wa.me/56966087808';
+const menuChips = () => ([
+  {t:'🌸 ¿Qué esencia me sirve?', msg:'elegir esencia'},
+  {t:'🚚 Envíos', msg:'envios'},
+  {t:'📅 Cursos', msg:'cursos'},
+  {t:'💳 Pagos', msg:'pagos'},
+  {t:'💬 Hablar con una persona', msg:'humano'}
+]);
+const menuInicial = txt => ({text:txt, chips:menuChips()});
+
+/* recomendación de producto real (usa la data y precios ya cargados) */
+function rec(id, motivo){
+  const d = PROD[id];
+  return {
+    text:`Para <b>${motivo}</b> te recomiendo <b>${d.n}</b> — ${CLP(d.p)}.\n${d.d}`,
+    chips:[{t:`Ver ${d.n} →`, prod:id}, {t:'Otra necesidad', msg:'elegir esencia'}, {t:'Hablar con una persona', msg:'humano'}]
+  };
+}
+const norm = s => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+
+function responderAgente(texto){
+  const t = norm(texto);
+  const has = (...k) => k.some(x => t.includes(x));
+
+  if(has('elegir esencia','que esencia','cual esencia','recomienda','recomiend','no se cual','no se cuel','ayuda a elegir'))
+    return {text:'¡Genial! Cuéntame qué estás viviendo y te sugiero una esencia 🌿', chips:[
+      {t:'😰 Ansiedad / estrés', msg:'ansiedad'}, {t:'😴 Dormir mejor', msg:'dormir'},
+      {t:'🛡️ Protección', msg:'proteccion'}, {t:'💪 Confianza', msg:'confianza'},
+      {t:'💧 Duelo / tristeza', msg:'duelo'}, {t:'⚡ Foco / energía', msg:'foco'}]};
+  if(has('ansiedad','estres','nervios','angustia','panico','crisis','preocup')) return rec('e4','la ansiedad y los momentos de nervios');
+  if(has('dormir','sueno','insomnio','rumia','vueltas','no para','de noche'))   return rec('e6','cuando la cabeza no para de dar vueltas, sobre todo de noche');
+  if(has('proteccion','proteger','ambiente','envidia','limite','mal rollo'))    return rec('e0','poner límites sanos y protegerte cuando el ambiente pesa');
+  if(has('confianza','autoestima','autocritica','seguridad','inseg'))           return rec('e3','recuperar la autoconfianza cuando la autocrítica pesa');
+  if(has('duelo','tristeza','pena','perdida','luto','fondo','depre'))           return rec('e9','atravesar un duelo o una tristeza profunda');
+  if(has('foco','concentr','estudiar','examen','memoria','energia','claridad')) return rec('e10','claridad para estudiar y concentrarte');
+  if(has('primera vez','no se nada','empezar','partir','botiquin','inicio','no cacho')) return rec('e11','partir con lo esencial');
+
+  if(has('envio','despacho','llega','demora','entrega','retiro','region','envian'))
+    return {text:'🚚 <b>Envío gratis</b> en compras sobre $40.000 a todo Chile. Despacho en 24–48 h hábiles, o <b>retiro sin costo</b> en tienda.', chips:[{t:'Formas de pago', msg:'pagos'}, {t:'Ver esencias', ir:'esencias'}]};
+  if(has('pago','pagar','webpay','transferencia','tarjeta','khipu','flow','cuota','debito','credito'))
+    return {text:'💳 Puedes pagar con <b>Webpay, Khipu, Flow</b>, tarjetas Visa/Mastercard o transferencia. Todo con pago seguro.', chips:[{t:'Envíos', msg:'envios'}, {t:'Ver cursos', ir:'cursos'}]};
+  if(has('curso','taller','formacion','bach','certific','clase','academia','zoom','medita','pnl','aprender'))
+    return {text:'📅 Hay cursos en vivo por Zoom y grabados en la Academia. El próximo en vivo es la <b>Formación en Flores de Bach</b> (inicia el 10 de agosto, con Sofía Vera) y las clases quedan grabadas.', chips:[{t:'Ver todos los cursos →', ir:'cursos'}, {t:'Ver la Formación →', curso:'c0'}]};
+  if(has('precio','cuanto','vale','cuesta','barato','oferta','descuento','valor'))
+    return {text:'Las esencias parten en <b>$7.500</b> (Flores de Bach 15 ml) y los kits desde $21.000. En Nutrición hay varias ofertas. ¿Buscas algo en particular?', chips:[{t:'Elegir esencia', msg:'elegir esencia'}, {t:'Ver ofertas', ir:'nutricion'}]};
+  if(has('humano','persona','hablar con','asesor','contacto','llamar','telefono','ejecutiv','real'))
+    return {text:'¡Claro! Te dejo el WhatsApp real de Kinexia para conversar con el equipo 💬', chips:[{t:'Abrir WhatsApp +56 9 6608 7808', url:WSP_REAL}, {t:'Volver al menú', msg:'hola'}]};
+  if(has('hola','buenas','buenos dias','buenas tardes','buenas noches','hey','holi','que tal'))
+    return menuInicial('¡Hola! 👋 ¿En qué te ayudo hoy?');
+  if(has('gracias','genial','perfecto','buenisimo','vale','ok'))
+    return {text:'¡De nada! 💚 ¿Te ayudo con algo más?', chips:menuChips()};
+
+  return {text:'Uy, en esta demo todavía no sé responder eso 😅. Puedo ayudarte con esencias, envíos, pagos o cursos — o te paso con una persona:', chips:menuChips()};
+}
+
+/* ---------- UI del chat ---------- */
+const chatEl   = document.getElementById('chat');
+const chatBody = document.getElementById('chat-body');
+const chatChips= document.getElementById('chat-chips');
+let saludado = false;
+
+function abrirChat(){
+  chatEl.classList.add('abierto'); chatEl.setAttribute('aria-hidden','false');
+  if(!saludado){ saludado = true; pintar(menuInicial('¡Hola! 👋 Soy la asistente virtual de Kinexia. Ojo: es una <b>demo</b>, respondo con guiones — pero te muestro cómo se sentiría. ¿En qué te ayudo?')); }
+  document.getElementById('chat-text').focus();
+}
+function cerrarChat(){ chatEl.classList.remove('abierto'); chatEl.setAttribute('aria-hidden','true'); }
+function addMsg(html, quien){
+  const d = document.createElement('div'); d.className = 'msg '+quien; d.innerHTML = html;
+  chatBody.appendChild(d); chatBody.scrollTop = chatBody.scrollHeight;
+}
+function setChips(chips){
+  chatChips.innerHTML = '';
+  (chips||[]).forEach(c=>{
+    const b = document.createElement('button'); b.textContent = c.t;
+    b.onclick = () => {
+      if(c.prod){ cerrarChat(); verProducto(c.prod); return; }
+      if(c.curso){ cerrarChat(); verCurso(c.curso); return; }
+      if(c.ir){ cerrarChat(); ir(c.ir); return; }
+      if(c.url){ window.open(c.url, '_blank', 'noopener'); return; }
+      if(c.msg){ enviar(c.t, c.msg); }
+    };
+    chatChips.appendChild(b);
+  });
+}
+function pintar(r){ addMsg(r.text, 'bot'); setChips(r.chips); }
+function mostrarTyping(){
+  const d = document.createElement('div'); d.className = 'typing'; d.id = 'chat-typing';
+  d.innerHTML = '<i></i><i></i><i></i>'; chatBody.appendChild(d); chatBody.scrollTop = chatBody.scrollHeight;
+}
+function quitarTyping(){ const t = document.getElementById('chat-typing'); if(t) t.remove(); }
+
+/* enviar: textoVisible = lo que se ve como mensaje del usuario; query = lo que interpreta el agente */
+function enviar(textoVisible, query){
+  addMsg(textoVisible, 'yo'); setChips([]); mostrarTyping();
+  setTimeout(() => {
+    quitarTyping();
+    Promise.resolve(responderAgente(query || textoVisible)).then(pintar);
+  }, 550);
+}
+
+document.getElementById('wsp-btn').addEventListener('click', e => {
+  e.preventDefault();
+  chatEl.classList.contains('abierto') ? cerrarChat() : abrirChat();
+});
+document.getElementById('chat-x').addEventListener('click', cerrarChat);
+document.getElementById('chat-form').addEventListener('submit', e => {
+  e.preventDefault();
+  const inp = document.getElementById('chat-text');
+  const v = inp.value.trim(); if(!v) return;
+  inp.value = ''; enviar(v, v);
 });
 </script>
 </body>
