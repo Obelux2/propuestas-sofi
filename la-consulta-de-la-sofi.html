@@ -2,9 +2,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
   :root{
-    --paper:#EDDDC6; --paper-2:#E4CFB2; --ink:#4A3B30; --ink-soft:#8A7260;
-    --coral:#C97B54; --coral-soft:#EFD3BC; --peach:#E8B48E; --sage:#94A883; --sage-soft:#DDE2CE;
-    --rose:#DBA79A; --onair:#C9564A;
+    --paper:#EDDDC6; --paper-2:#E4CFB2; --ink:#4A3B30; --ink-soft:#6F5848;
+    --coral:#944E2E; --coral-soft:#EFD3BC; --peach:#E8B48E; --sage:#94A883; --sage-soft:#DDE2CE;
+    --sage-ink:#516544; --rose:#DBA79A; --onair:#C9564A;
     --card:#F9F1E2; --line:#D3BEA0;
     --radius:18px;
   }
@@ -26,7 +26,7 @@
   a{color:var(--coral)}
   .eyebrow{
     display:inline-block; font-size:.72rem; letter-spacing:.18em; text-transform:uppercase;
-    color:var(--sage); font-weight:700; margin-bottom:.7em;
+    color:var(--sage-ink); font-weight:700; margin-bottom:.7em;
   }
   section{padding:4rem 1.4rem}
   .wrap{max-width:1020px; margin:0 auto}
@@ -106,15 +106,15 @@
     font-family:inherit; transition:all .15s ease;
   }
   .chip:hover{border-color:var(--sage); transform:translateY(-1px)}
-  .chip[aria-pressed="true"]{background:var(--sage); border-color:var(--sage); color:#fff}
-  .chip:focus-visible,.btn:focus-visible,a:focus-visible,.dia:focus-visible{outline:3px solid var(--peach); outline-offset:2px}
+  .chip[aria-pressed="true"]{background:var(--sage-ink); border-color:var(--sage-ink); color:#fff}
+  .chip:focus-visible,.btn:focus-visible,a:focus-visible,.dia:focus-visible{outline:3px solid var(--ink); outline-offset:2px}
   .receta{
     margin-top:1rem; background:var(--card); border:1px dashed var(--sage); border-radius:var(--radius);
     padding:1.5rem 1.6rem;
   }
   .receta[hidden]{display:none}
   .receta .esencia{font-family:Georgia,serif; font-size:1.5rem; color:var(--coral); margin:0 0 .15em}
-  .receta .sistema{font-size:.78rem; letter-spacing:.14em; text-transform:uppercase; color:var(--sage); font-weight:700}
+  .receta .sistema{font-size:.78rem; letter-spacing:.14em; text-transform:uppercase; color:var(--sage-ink); font-weight:700}
   .receta p{margin:.6em 0 0}
   .receta .nota{font-size:.85rem; color:var(--ink-soft); font-style:italic}
 
@@ -137,7 +137,7 @@
   .stat span{display:block; font-size:.83rem; color:var(--ink-soft)}
   .dial-card{display:block; text-decoration:none; color:var(--ink)}
   .dial-card .freq{
-    font-family:Consolas,monospace; font-size:.8rem; color:var(--onair); letter-spacing:.1em;
+    font-family:Consolas,monospace; font-size:.8rem; color:var(--coral); letter-spacing:.1em;
     border:1px solid var(--line); border-radius:6px; padding:.15em .6em; display:inline-block; margin-bottom:.6rem;
     background:var(--paper);
   }
@@ -146,7 +146,7 @@
   .dial-line{height:6px; border-radius:3px; margin-top:.9rem;
     background:repeating-linear-gradient(90deg, var(--line) 0 2px, transparent 2px 12px);
     position:relative}
-  .dial-line i{position:absolute; top:-4px; width:3px; height:14px; background:var(--onair); border-radius:2px}
+  .dial-line i{position:absolute; top:-4px; width:3px; height:14px; background:var(--coral); border-radius:2px}
 
   /* ---------- talleres ---------- */
   .taller-card{display:flex; flex-direction:column; gap:.4rem}
@@ -160,14 +160,14 @@
   .inscrito[hidden]{display:none}
   .demo-badge{
     display:inline-block; font-size:.7rem; letter-spacing:.12em; text-transform:uppercase; font-weight:700;
-    background:var(--rose); color:#fff; border-radius:6px; padding:.2em .7em; transform:rotate(-1.5deg);
+    background:var(--rose); color:var(--ink); border-radius:6px; padding:.2em .7em; transform:rotate(-1.5deg);
   }
 
   /* ---------- agendar ---------- */
   .pasos{display:flex; gap:.5rem; align-items:center; flex-wrap:wrap; margin:1.2rem 0 1.8rem; font-size:.85rem; color:var(--ink-soft)}
   .paso{display:flex; align-items:center; gap:.45em}
   .paso .n{width:1.7em;height:1.7em;border-radius:50%;display:grid;place-items:center;border:1.5px solid var(--line);font-weight:700;background:var(--card)}
-  .paso.done .n{background:var(--sage); border-color:var(--sage); color:#fff}
+  .paso.done .n{background:var(--sage-ink); border-color:var(--sage-ink); color:#fff}
   .paso.now .n{background:var(--coral); border-color:var(--coral); color:#fff}
   .pasos .sep{width:2rem;height:1px;background:var(--line)}
   .agenda-box{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:1.8rem}
@@ -213,7 +213,7 @@
 </nav>
 
 <!-- ============ VISTA: INICIO ============ -->
-<main id="v-inicio" class="view">
+<main id="v-inicio" class="view active">
   <div class="hero">
     <canvas id="petals" aria-hidden="true"></canvas>
     <div class="wrap">
